@@ -30,11 +30,41 @@ seaborn>=0.12.0
 # opencv-python>=4.8.0
 # pillow>=10.0.0
 
-# Optional: NLP
-# transformers>=4.30.0
-# tokenizers>=0.13.0
+# LLM Benchmarking Suite (NEW)
+# Transformers and Model Loading
+transformers>=4.35.0
+accelerate>=0.24.0
+sentencepiece>=0.1.99
+protobuf>=3.20.0
+tokenizers>=0.15.0
+
+# Quantization Libraries
+bitsandbytes>=0.41.0  # For int8/int4 quantization
+scipy>=1.10.0  # Required by some quantization methods
+
+# YAML Configuration
+pyyaml>=6.0
+
+# Additional Monitoring
+psutil>=5.9.0  # System monitoring
+
+# Progress and UI
+tqdm>=4.65.0  # Progress bars
+colorama>=0.4.6  # Colored terminal output
+
+# Optional: Advanced LLM Features
+# flash-attn>=2.3.0  # Flash Attention 2 (requires specific CUDA setup)
+# vllm>=0.2.0  # vLLM for production serving
+# llama-cpp-python>=0.2.0  # GGML/GGUF support
+# gguf>=0.1.0  # GGUF format support
+
+# Optional: Experiment Tracking
+# wandb>=0.15.0  # Weights & Biases
+# tensorboard>=2.14.0  # TensorBoard
 
 # Development Tools
 pytest>=7.4.0
 jupyter>=1.0.0
 ipython>=8.14.0
+black>=23.0.0
+flake8>=6.0.0

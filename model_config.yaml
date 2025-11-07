@@ -1,0 +1,267 @@
+# Model Configuration for LLM Benchmark Suite
+# NVIDIA L40S - 48GB VRAM
+
+# Model definitions with expected memory requirements
+models:
+  # Small models (< 5GB)
+  small:
+    - name: "gpt2"
+      family: "GPT"
+      parameters: 124M
+      expected_memory_fp16: 0.5
+      expected_memory_int8: 0.3
+
+    - name: "gpt2-medium"
+      family: "GPT"
+      parameters: 355M
+      expected_memory_fp16: 1.0
+      expected_memory_int8: 0.6
+
+  # 7B models (Fits well on L40S)
+  7b:
+    - name: "tiiuae/falcon-7b"
+      family: "Falcon"
+      parameters: 7B
+      expected_memory_fp16: 14.0
+      expected_memory_int8: 7.5
+      expected_memory_int4: 4.5
+      trust_remote_code: true
+
+    - name: "tiiuae/falcon-7b-instruct"
+      family: "Falcon"
+      parameters: 7B
+      expected_memory_fp16: 14.0
+      expected_memory_int8: 7.5
+      trust_remote_code: true
+
+    - name: "mistralai/Mistral-7B-v0.1"
+      family: "Mistral"
+      parameters: 7B
+      expected_memory_fp16: 14.0
+      expected_memory_int8: 7.5
+      expected_memory_int4: 4.5
+
+    - name: "mistralai/Mistral-7B-Instruct-v0.1"
+      family: "Mistral"
+      parameters: 7B
+      expected_memory_fp16: 14.0
+      expected_memory_int8: 7.5
+
+    - name: "meta-llama/Llama-2-7b-hf"
+      family: "Llama2"
+      parameters: 7B
+      expected_memory_fp16: 14.0
+      expected_memory_int8: 7.5
+      expected_memory_int4: 4.5
+      requires_auth: true
+
+    - name: "meta-llama/Llama-2-7b-chat-hf"
+      family: "Llama2"
+      parameters: 7B
+      expected_memory_fp16: 14.0
+      expected_memory_int8: 7.5
+      requires_auth: true
+
+    - name: "codellama/CodeLlama-7b-hf"
+      family: "CodeLlama"
+      parameters: 7B
+      expected_memory_fp16: 14.0
+      expected_memory_int8: 7.5
+      expected_memory_int4: 4.5
+
+    - name: "codellama/CodeLlama-7b-Instruct-hf"
+      family: "CodeLlama"
+      parameters: 7B
+      expected_memory_fp16: 14.0
+      expected_memory_int8: 7.5
+
+  # 13B models (Fits with quantization)
+  13b:
+    - name: "tiiuae/falcon-13b"
+      family: "Falcon"
+      parameters: 13B
+      expected_memory_fp16: 26.0
+      expected_memory_int8: 13.5
+      expected_memory_int4: 7.5
+      trust_remote_code: true
+      recommended_quant: "int8"
+
+    - name: "meta-llama/Llama-2-13b-hf"
+      family: "Llama2"
+      parameters: 13B
+      expected_memory_fp16: 26.0
+      expected_memory_int8: 13.5
+      expected_memory_int4: 7.5
+      requires_auth: true
+      recommended_quant: "int8"
+
+    - name: "meta-llama/Llama-2-13b-chat-hf"
+      family: "Llama2"
+      parameters: 13B
+      expected_memory_fp16: 26.0
+      expected_memory_int8: 13.5
+      requires_auth: true
+      recommended_quant: "int8"
+
+  # 34B models (Requires quantization)
+  34b:
+    - name: "codellama/CodeLlama-34b-hf"
+      family: "CodeLlama"
+      parameters: 34B
+      expected_memory_fp16: 68.0
+      expected_memory_int8: 34.5
+      expected_memory_int4: 18.0
+      recommended_quant: "int4"
+      note: "Requires int4 quantization for L40S"
+
+    - name: "codellama/CodeLlama-34b-Instruct-hf"
+      family: "CodeLlama"
+      parameters: 34B
+      expected_memory_fp16: 68.0
+      expected_memory_int8: 34.5
+      expected_memory_int4: 18.0
+      recommended_quant: "int4"
+
+# Quantization configurations
+quantization:
+  fp32:
+    description: "Full precision (32-bit floating point)"
+    memory_multiplier: 4.0
+    accuracy: "highest"
+    speed: "slowest"
+
+  fp16:
+    description: "Half precision (16-bit floating point)"
+    memory_multiplier: 2.0
+    accuracy: "high"
+    speed: "fast"
+    recommended: true
+
+  bf16:
+    description: "Brain float 16 (better range than fp16)"
+    memory_multiplier: 2.0
+    accuracy: "high"
+    speed: "fast"
+    requires: "Ampere or newer GPU"
+
+  int8:
+    description: "8-bit quantization with bitsandbytes"
+    memory_multiplier: 1.0
+    accuracy: "good"
+    speed: "faster"
+    requires: "bitsandbytes library"
+
+  int4:
+    description: "4-bit quantization (NF4)"
+    memory_multiplier: 0.5
+    accuracy: "acceptable"
+    speed: "fastest"
+    requires: "bitsandbytes library"
+
+  dynamic:
+    description: "PyTorch dynamic quantization"
+    memory_multiplier: 1.0
+    accuracy: "good"
+    speed: "faster"
+    note: "Applied post-loading"
+
+# Benchmark configurations
+benchmark:
+  quick_test:
+    models: ["gpt2"]
+    quantizations: ["fp16"]
+    batch_sizes: [1, 4]
+    iterations: 5
+    warmup: 2
+
+  standard_test:
+    models:
+      - "gpt2"
+      - "mistralai/Mistral-7B-v0.1"
+      - "meta-llama/Llama-2-7b-hf"
+    quantizations: ["fp16", "int8"]
+    batch_sizes: [1, 4, 8, 16]
+    iterations: 10
+    warmup: 3
+
+  comprehensive_test:
+    models:
+      - "gpt2"
+      - "tiiuae/falcon-7b"
+      - "mistralai/Mistral-7B-v0.1"
+      - "meta-llama/Llama-2-7b-hf"
+      - "meta-llama/Llama-2-13b-hf"
+      - "codellama/CodeLlama-7b-hf"
+      - "codellama/CodeLlama-34b-hf"
+    quantizations: ["fp16", "bf16", "int8", "int4"]
+    batch_sizes: [1, 2, 4, 8, 16, 32]
+    iterations: 20
+    warmup: 5
+
+  # Batch size recommendations per model size
+  batch_recommendations:
+    7b_fp16: [1, 2, 4, 8]
+    7b_int8: [1, 2, 4, 8, 16]
+    7b_int4: [1, 2, 4, 8, 16, 32]
+    13b_fp16: [1, 2, 4]
+    13b_int8: [1, 2, 4, 8]
+    13b_int4: [1, 2, 4, 8, 16]
+    34b_int8: [1, 2, 4]
+    34b_int4: [1, 2, 4, 8]
+
+# GPU monitoring settings
+monitoring:
+  enabled: true
+  interval: 0.1  # seconds
+  metrics:
+    - gpu_utilization
+    - memory_usage
+    - temperature
+    - power_consumption
+    - clock_speeds
+
+# Output settings
+output:
+  formats: ["json", "csv", "markdown"]
+  save_raw_data: true
+  generate_plots: true
+  compare_sessions: true
+
+  # Report sections
+  report_sections:
+    - executive_summary
+    - performance_metrics
+    - memory_analysis
+    - power_efficiency
+    - batch_scaling
+    - recommendations
+
+# L40S specific settings
+gpu:
+  name: "NVIDIA L40S"
+  memory_gb: 48
+  compute_capability: "8.9"
+  tensor_cores: true
+  fp16_performance: "181.8 TFLOPS"
+  int8_performance: "733 TOPS"
+  memory_bandwidth: "864 GB/s"
+  tdp: "350W"
+
+  # Performance targets
+  targets:
+    fp16_tflops: 150
+    memory_bandwidth_gbps: 700
+    power_efficiency_tokens_per_watt: 10
+
+# HuggingFace Hub settings
+huggingface:
+  cache_dir: "./models_cache"
+  use_auth_token: false  # Set to true and configure for gated models
+  token_env_var: "HF_TOKEN"
+
+# Advanced features
+features:
+  flash_attention: false  # Requires flash-attn package
+  gradient_checkpointing: false  # For training/fine-tuning
+  kv_cache_optimization: true
+  compile_model: false  # torch.compile (PyTorch 2.0+)
