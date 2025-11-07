@@ -2,6 +2,8 @@
 
 Professionelles Benchmark-System für LLM Performance-Evaluierung auf NVIDIA L40S.
 
+> 💡 **Neu hier?** Lies zuerst [BENCHMARK_EXPLAINED.md](BENCHMARK_EXPLAINED.md) für eine Schritt-für-Schritt Erklärung, was während des Benchmarks passiert!
+
 ---
 
 ## 🎯 Was wird gemessen?
