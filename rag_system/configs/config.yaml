@@ -1,0 +1,53 @@
+# RAG System Configuration
+
+# Document Processing
+processing:
+  chunk_size: 512          # Chunk size in tokens
+  chunk_overlap: 50        # Overlap between chunks
+  enable_deduplication: true
+
+# Embedding Model
+embedding:
+  model_name: "all-MiniLM-L6-v2"  # Sentence transformer model
+  dimension: 384                   # Embedding dimension
+  batch_size: 32                   # Batch size for encoding
+  device: "cuda"                   # cuda or cpu
+
+# Vector Store
+vector_store:
+  index_type: "flat"       # flat or ivf
+  metric: "cosine"         # cosine or l2
+  use_gpu: false           # Use GPU for FAISS
+
+# Retrieval
+retrieval:
+  semantic_weight: 0.7     # Weight for semantic search
+  keyword_weight: 0.3      # Weight for keyword search
+  k: 5                     # Number of results to retrieve
+
+# LLM Generation
+llm:
+  model_name: "mistralai/Mistral-Nemo-Instruct-2407"
+  load_in_4bit: true
+  device_map: "auto"
+  max_context_length: 30000
+
+# Generation Parameters
+generation:
+  max_new_tokens: 512
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 50
+  repetition_penalty: 1.1
+
+# API Server
+api:
+  host: "0.0.0.0"
+  port: 8000
+  rate_limit: 10           # Requests per minute per client
+
+# Paths
+paths:
+  documents: "data/documents"
+  vector_store: "data/vector_store"
+  logs: "logs"
