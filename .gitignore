@@ -36,6 +36,10 @@ logs/
 wandb/
 runs/
 
+# Test Results (keep README only)
+results/*
+!results/README.md
+
 # OS
 .DS_Store
 Thumbs.db

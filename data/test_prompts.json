@@ -1,0 +1,358 @@
+{
+  "test_prompts": {
+    "basic": [
+      {
+        "id": "basic_001",
+        "category": "Functions",
+        "prompt": "Write a Python function to calculate the factorial of a number.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_002",
+        "category": "Functions",
+        "prompt": "Write a function that checks if a number is even or odd.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_003",
+        "category": "Strings",
+        "prompt": "Write a function to reverse a string.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_004",
+        "category": "Lists",
+        "prompt": "Write a function to find the maximum value in a list.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_005",
+        "category": "Loops",
+        "prompt": "Write a function to print all numbers from 1 to n.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_006",
+        "category": "Strings",
+        "prompt": "Write a function to count vowels in a string.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_007",
+        "category": "Math",
+        "prompt": "Write a function to calculate the sum of all numbers in a list.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_008",
+        "category": "Conditionals",
+        "prompt": "Write a function to find the largest of three numbers.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_009",
+        "category": "Strings",
+        "prompt": "Write a function to check if a string is a palindrome.",
+        "difficulty": "easy"
+      },
+      {
+        "id": "basic_010",
+        "category": "Lists",
+        "prompt": "Write a function to remove duplicates from a list.",
+        "difficulty": "easy"
+      }
+    ],
+    "intermediate": [
+      {
+        "id": "inter_001",
+        "category": "Algorithms",
+        "prompt": "Write a function to implement binary search on a sorted list.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_002",
+        "category": "Data Structures",
+        "prompt": "Write a class to implement a stack with push, pop, and peek methods.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_003",
+        "category": "Recursion",
+        "prompt": "Write a recursive function to calculate the nth Fibonacci number.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_004",
+        "category": "Sorting",
+        "prompt": "Write a function to implement the merge sort algorithm.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_005",
+        "category": "Strings",
+        "prompt": "Write a function to find all anagrams of a word in a list of words.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_006",
+        "category": "Lists",
+        "prompt": "Write a function to find the longest common subsequence between two lists.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_007",
+        "category": "Data Structures",
+        "prompt": "Write a class to implement a queue using two stacks.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_008",
+        "category": "Algorithms",
+        "prompt": "Write a function to find all prime numbers up to n using the Sieve of Eratosthenes.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_009",
+        "category": "Dynamic Programming",
+        "prompt": "Write a function to solve the coin change problem with minimum coins.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_010",
+        "category": "Trees",
+        "prompt": "Write a function to perform level-order traversal of a binary tree.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_011",
+        "category": "Dictionaries",
+        "prompt": "Write a function to group anagrams from a list of strings using a dictionary.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "inter_012",
+        "category": "Sets",
+        "prompt": "Write a function to find the intersection of two lists efficiently using sets.",
+        "difficulty": "medium"
+      }
+    ],
+    "advanced": [
+      {
+        "id": "adv_001",
+        "category": "Graph Algorithms",
+        "prompt": "Write a function to implement Dijkstra's shortest path algorithm for a weighted graph.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_002",
+        "category": "Trees",
+        "prompt": "Write a class to implement a Red-Black tree with insert and delete operations.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_003",
+        "category": "Dynamic Programming",
+        "prompt": "Write a function to solve the longest increasing subsequence problem with O(n log n) complexity.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_004",
+        "category": "Backtracking",
+        "prompt": "Write a function to solve the N-Queens problem using backtracking.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_005",
+        "category": "Graph Algorithms",
+        "prompt": "Write a function to detect cycles in a directed graph using DFS.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_006",
+        "category": "Strings",
+        "prompt": "Write a function to implement the KMP string matching algorithm.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_007",
+        "category": "Dynamic Programming",
+        "prompt": "Write a function to solve the matrix chain multiplication problem.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_008",
+        "category": "Data Structures",
+        "prompt": "Write a class to implement a Trie with insert, search, and prefix search operations.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_009",
+        "category": "Algorithms",
+        "prompt": "Write a function to implement topological sorting of a directed acyclic graph.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "adv_010",
+        "category": "Bit Manipulation",
+        "prompt": "Write a function to find the single number in an array where every element appears three times except one.",
+        "difficulty": "hard"
+      }
+    ],
+    "specialized": [
+      {
+        "id": "spec_001",
+        "category": "Error Handling",
+        "prompt": "Write a function to safely parse JSON with comprehensive error handling and logging.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "spec_002",
+        "category": "File I/O",
+        "prompt": "Write a function to read a CSV file and convert it to a list of dictionaries with error handling.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "spec_003",
+        "category": "Decorators",
+        "prompt": "Write a decorator that measures the execution time of a function.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "spec_004",
+        "category": "Context Managers",
+        "prompt": "Write a context manager to temporarily change the current working directory.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "spec_005",
+        "category": "Generators",
+        "prompt": "Write a generator function that yields fibonacci numbers indefinitely.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "spec_006",
+        "category": "Regex",
+        "prompt": "Write a function to validate email addresses using regular expressions.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "spec_007",
+        "category": "Classes",
+        "prompt": "Write a class that implements the Singleton pattern in Python.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "spec_008",
+        "category": "Async",
+        "prompt": "Write an async function to fetch multiple URLs concurrently using asyncio.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "spec_009",
+        "category": "Type Hints",
+        "prompt": "Write a function with proper type hints that merges two sorted lists of integers.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "spec_010",
+        "category": "Testing",
+        "prompt": "Write a function to calculate factorial and include unit tests using pytest.",
+        "difficulty": "medium"
+      }
+    ],
+    "real_world": [
+      {
+        "id": "real_001",
+        "category": "Data Processing",
+        "prompt": "Write a function to parse server logs and extract all IP addresses with their access counts.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "real_002",
+        "category": "API",
+        "prompt": "Write a function to create a REST API endpoint using Flask that returns user information.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "real_003",
+        "category": "Database",
+        "prompt": "Write a function to safely query a SQLite database with parameterized queries.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "real_004",
+        "category": "Caching",
+        "prompt": "Write a decorator that implements LRU caching for expensive function calls.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "real_005",
+        "category": "Data Validation",
+        "prompt": "Write a function to validate user registration data with email, password strength, and age checks.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "real_006",
+        "category": "File Processing",
+        "prompt": "Write a function to process a large log file in chunks without loading it entirely into memory.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "real_007",
+        "category": "Configuration",
+        "prompt": "Write a class to load and manage application configuration from YAML files with environment variable overrides.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "real_008",
+        "category": "Retry Logic",
+        "prompt": "Write a decorator that retries a function with exponential backoff on failure.",
+        "difficulty": "medium"
+      },
+      {
+        "id": "real_009",
+        "category": "Rate Limiting",
+        "prompt": "Write a class to implement a token bucket rate limiter for API requests.",
+        "difficulty": "hard"
+      },
+      {
+        "id": "real_010",
+        "category": "Multithreading",
+        "prompt": "Write a function to download multiple files in parallel using ThreadPoolExecutor.",
+        "difficulty": "medium"
+      }
+    ]
+  },
+  "evaluation_categories": {
+    "syntax": "Does the code have correct Python syntax?",
+    "functionality": "Does the code solve the problem correctly?",
+    "efficiency": "Is the solution efficient in time and space?",
+    "readability": "Is the code well-structured and readable?",
+    "best_practices": "Does it follow Python best practices?",
+    "error_handling": "Does it handle edge cases and errors?"
+  },
+  "metadata": {
+    "total_prompts": 62,
+    "difficulty_distribution": {
+      "easy": 10,
+      "medium": 36,
+      "hard": 16
+    },
+    "categories": [
+      "Functions",
+      "Strings",
+      "Lists",
+      "Algorithms",
+      "Data Structures",
+      "Recursion",
+      "Dynamic Programming",
+      "Graph Algorithms",
+      "Trees",
+      "Error Handling",
+      "File I/O",
+      "Decorators",
+      "Async",
+      "Real-World Applications"
+    ]
+  }
+}
