@@ -72,9 +72,42 @@ def get_gpu_stats() -> dict:
     return stats
 
 
+def get_colored_bar(percent: float, width: int = 40, style: str = "gradient") -> str:
+    """
+    Create colored progress bar
+
+    Args:
+        percent: Percentage (0-100)
+        width: Bar width
+        style: 'gradient' or 'solid'
+
+    Returns:
+        str: Colored progress bar
+    """
+    filled = int(width * percent / 100)
+
+    # Color based on percentage
+    if percent < 50:
+        color = "\033[92m"  # Green
+    elif percent < 75:
+        color = "\033[93m"  # Yellow
+    else:
+        color = "\033[91m"  # Red
+
+    reset = "\033[0m"
+
+    if style == "gradient":
+        # Use different characters for visual effect
+        bar_chars = "▓" * filled + "░" * (width - filled)
+    else:
+        bar_chars = "█" * filled + "░" * (width - filled)
+
+    return f"{color}{bar_chars}{reset}"
+
+
 def print_gpu_stats(stats: dict, clear_screen: bool = True):
     """
-    Pretty print GPU statistics
+    Pretty print GPU statistics with modern UI
 
     Args:
         stats: GPU statistics dictionary
@@ -83,56 +116,99 @@ def print_gpu_stats(stats: dict, clear_screen: bool = True):
     if clear_screen:
         print("\033[2J\033[H", end="")  # Clear screen and move cursor to top
 
-    print("=" * 70)
-    print("🖥️  GPU MONITORING - Live Stats")
-    print("=" * 70)
-    print(f"Timestamp: {stats['timestamp']}")
+    # ANSI color codes
+    CYAN = "\033[96m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    RED = "\033[91m"
+    BOLD = "\033[1m"
+    RESET = "\033[0m"
+    DIM = "\033[2m"
+
+    # Box drawing characters
+    width = 76
+
     print()
+    print(f"{CYAN}╔{'═' * (width - 2)}╗{RESET}")
+    print(f"{CYAN}║{RESET} {BOLD}🖥️  GPU MONITORING{RESET}{' ' * (width - 20)}║")
+    print(f"{CYAN}╠{'═' * (width - 2)}╣{RESET}")
+
+    timestamp = stats['timestamp'].split('T')[1].split('.')[0]
+    print(f"{CYAN}║{RESET} {DIM}⏱  {timestamp}{' ' * (width - 14)}║{RESET}")
+    print(f"{CYAN}╠{'═' * (width - 2)}╣{RESET}")
 
     if "error" in stats:
-        print(f"❌ {stats['error']}")
+        print(f"{CYAN}║{RESET}  {RED}❌ {stats['error']}{RESET}{' ' * (width - len(stats['error']) - 7)}║")
+        print(f"{CYAN}╚{'═' * (width - 2)}╝{RESET}")
         return
 
-    print(f"GPU: {stats['gpu_name']}")
-    print()
+    # GPU Name
+    gpu_name = stats['gpu_name']
+    print(f"{CYAN}║{RESET}  {BOLD}📊 Device:{RESET} {GREEN}{gpu_name}{RESET}{' ' * (width - len(gpu_name) - 15)}║")
+    print(f"{CYAN}╠{'═' * (width - 2)}╣{RESET}")
 
-    # Memory bar
+    # VRAM Section
     mem_used = stats['memory_reserved_gb']
     mem_total = stats['memory_total_gb']
+    mem_free = stats['memory_free_gb']
     mem_percent = stats['memory_usage_percent']
 
-    bar_width = 40
-    filled = int(bar_width * mem_percent / 100)
-    bar = "█" * filled + "░" * (bar_width - filled)
+    print(f"{CYAN}║{RESET}  {BOLD}💾 VRAM{RESET}{' ' * (width - 11)}║")
+    bar = get_colored_bar(mem_percent, width=60)
+    percent_str = f"{mem_percent:.1f}%"
+    print(f"{CYAN}║{RESET}    {bar} {percent_str}{' ' * (width - 70 - len(percent_str))}║")
 
-    print("💾 VRAM Usage:")
-    print(f"   [{bar}] {mem_percent}%")
-    print(f"   Used: {mem_used:.2f} GB / {mem_total:.2f} GB")
-    print(f"   Free: {stats['memory_free_gb']:.2f} GB")
-    print()
+    usage_str = f"Used: {mem_used:.1f} GB / {mem_total:.1f} GB"
+    free_str = f"Free: {mem_free:.1f} GB"
+    print(f"{CYAN}║{RESET}    {usage_str}{' ' * (width - len(usage_str) - 6)}║")
+    print(f"{CYAN}║{RESET}    {free_str}{' ' * (width - len(free_str) - 6)}║")
 
-    # Other stats
+    # GPU Utilization
     if stats['utilization_percent'] != "N/A":
         util = stats['utilization_percent']
-        print("⚡ GPU Utilization:")
-        util_bar = "█" * int(bar_width * util / 100) + "░" * (bar_width - int(bar_width * util / 100))
-        print(f"   [{util_bar}] {util}%")
-        print()
+        print(f"{CYAN}╠{'─' * (width - 2)}╣{RESET}")
+        print(f"{CYAN}║{RESET}  {BOLD}⚡ GPU Utilization{RESET}{' ' * (width - 21)}║")
 
-    if stats['temperature_c'] != "N/A":
-        temp = stats['temperature_c']
-        temp_emoji = "🟢" if temp < 60 else "🟡" if temp < 80 else "🔴"
-        print(f"🌡️  Temperature: {temp_emoji} {temp}°C")
-        print()
+        util_bar = get_colored_bar(util, width=60)
+        util_str = f"{util}%"
+        print(f"{CYAN}║{RESET}    {util_bar} {util_str}{' ' * (width - 70 - len(util_str))}║")
 
-    if stats['power_usage_w'] != "N/A":
-        power = stats['power_usage_w']
-        print(f"⚡ Power Usage: {power}W")
-        print()
+    # Temperature and Power
+    if stats['temperature_c'] != "N/A" or stats['power_usage_w'] != "N/A":
+        print(f"{CYAN}╠{'─' * (width - 2)}╣{RESET}")
 
-    print("=" * 70)
-    print("Press Ctrl+C to stop monitoring")
-    print("=" * 70)
+        info_parts = []
+
+        if stats['temperature_c'] != "N/A":
+            temp = stats['temperature_c']
+            if temp < 60:
+                temp_color = GREEN
+                temp_status = "OPTIMAL"
+            elif temp < 75:
+                temp_color = YELLOW
+                temp_status = "WARM"
+            elif temp < 85:
+                temp_color = YELLOW
+                temp_status = "HOT"
+            else:
+                temp_color = RED
+                temp_status = "CRITICAL"
+
+            info_parts.append(f"🌡️  {temp_color}{temp}°C {temp_status}{RESET}")
+
+        if stats['power_usage_w'] != "N/A":
+            power = stats['power_usage_w']
+            info_parts.append(f"⚡ {power:.1f}W")
+
+        info_line = "    ".join(info_parts)
+        # Remove ANSI codes for length calculation
+        info_line_plain = info_line.replace(GREEN, "").replace(YELLOW, "").replace(RED, "").replace(RESET, "").replace(BOLD, "").replace(DIM, "")
+        print(f"{CYAN}║{RESET}  {info_line}{' ' * (width - len(info_line_plain) - 4)}║")
+
+    print(f"{CYAN}╚{'═' * (width - 2)}╝{RESET}")
+    print()
+    print(f"{DIM}  Press Ctrl+C to stop monitoring{RESET}")
+    print()
 
 
 def monitor_gpu(interval: int = 2, log_file: Optional[str] = None):

@@ -111,73 +111,135 @@ class TrainingMonitor:
         return str(timedelta(seconds=int(remaining_seconds)))
 
     def print_dashboard(self, clear_screen: bool = True):
-        """Print training dashboard"""
+        """Print training dashboard with modern UI"""
         if clear_screen:
             print("\033[2J\033[H", end="")  # Clear screen
 
-        print("=" * 80)
-        print("🔥 TRAINING DASHBOARD - Live Progress")
-        print("=" * 80)
+        # ANSI color codes
+        CYAN = "\033[96m"
+        GREEN = "\033[92m"
+        YELLOW = "\033[93m"
+        RED = "\033[91m"
+        MAGENTA = "\033[95m"
+        BOLD = "\033[1m"
+        RESET = "\033[0m"
+        DIM = "\033[2m"
+
+        width = 84
+
         print()
+        print(f"{MAGENTA}╔{'═' * (width - 2)}╗{RESET}")
+        print(f"{MAGENTA}║{RESET} {BOLD}🔥 TRAINING DASHBOARD{RESET}{' ' * (width - 24)}║")
+        print(f"{MAGENTA}╠{'═' * (width - 2)}╣{RESET}")
 
         latest = self.get_latest_stats()
 
         if not latest:
-            print("⏳ Waiting for training to start...")
-            print()
-            print("=" * 80)
+            print(f"{MAGENTA}║{RESET}  {YELLOW}⏳ Waiting for training to start...{RESET}{' ' * (width - 38)}║")
+            print(f"{MAGENTA}╚{'═' * (width - 2)}╝{RESET}")
             return
+
+        # Timestamp
+        timestamp = latest['timestamp'].strftime('%H:%M:%S')
+        print(f"{MAGENTA}║{RESET} {DIM}⏱  {timestamp}{' ' * (width - 14)}║{RESET}")
+        print(f"{MAGENTA}╠{'═' * (width - 2)}╣{RESET}")
 
         # Current stats
         epoch = latest['epoch']
         loss = latest['loss']
         lr = latest['learning_rate']
 
-        print(f"📊 Current Progress:")
-        print(f"   Epoch:         {epoch:.2f} / 3.00")
-        print(f"   Loss:          {loss:.4f}")
-        print(f"   Learning Rate: {lr:.6f}")
-        print()
+        # Loss color based on value (lower is better)
+        if loss < 0.5:
+            loss_color = GREEN
+            loss_status = "EXCELLENT"
+        elif loss < 1.0:
+            loss_color = GREEN
+            loss_status = "GOOD"
+        elif loss < 1.5:
+            loss_color = YELLOW
+            loss_status = "FAIR"
+        else:
+            loss_color = YELLOW
+            loss_status = "TRAINING"
+
+        print(f"{MAGENTA}║{RESET}  {BOLD}📊 Current Metrics{RESET}{' ' * (width - 22)}║")
+        print(f"{MAGENTA}║{RESET}    Epoch: {CYAN}{epoch:.2f}{RESET} / {CYAN}3.00{RESET}{' ' * (width - 27)}║")
+        print(f"{MAGENTA}║{RESET}    Loss:  {loss_color}{loss:.4f} {loss_status}{RESET}{' ' * (width - 29 - len(loss_status))}║")
+        print(f"{MAGENTA}║{RESET}    LR:    {DIM}{lr:.6f}{RESET}{' ' * (width - 25)}║")
+        print(f"{MAGENTA}╠{'─' * (width - 2)}╣{RESET}")
 
         # Progress bar
         progress = epoch / 3.0
-        bar_width = 50
+        bar_width = 68
         filled = int(bar_width * progress)
-        bar = "█" * filled + "░" * (bar_width - filled)
-        print(f"Progress: [{bar}] {progress*100:.1f}%")
-        print()
+
+        # Colored progress bar
+        if progress < 0.33:
+            bar_color = YELLOW
+        elif progress < 0.66:
+            bar_color = CYAN
+        else:
+            bar_color = GREEN
+
+        bar = f"{bar_color}{'▓' * filled}{'░' * (bar_width - filled)}{RESET}"
+        progress_str = f"{progress*100:.1f}%"
+
+        print(f"{MAGENTA}║{RESET}  {BOLD}Progress{RESET}{' ' * (width - 12)}║")
+        print(f"{MAGENTA}║{RESET}    {bar} {progress_str}{' ' * (width - 78 - len(progress_str))}║")
 
         # Loss trend
         if len(self.stats_history) >= 10:
+            print(f"{MAGENTA}╠{'─' * (width - 2)}╣{RESET}")
             recent_losses = [s['loss'] for s in self.stats_history[-10:]]
-            loss_trend = "📉 Decreasing" if recent_losses[-1] < recent_losses[0] else "📈 Increasing"
-            print(f"📈 Loss Trend (last 10 steps): {loss_trend}")
-            print(f"   Start: {recent_losses[0]:.4f} → Current: {recent_losses[-1]:.4f}")
-            print()
+            is_decreasing = recent_losses[-1] < recent_losses[0]
+
+            if is_decreasing:
+                trend_color = GREEN
+                trend_icon = "📉"
+                trend_text = "DECREASING ✓"
+            else:
+                trend_color = RED
+                trend_icon = "📈"
+                trend_text = "INCREASING ⚠"
+
+            print(f"{MAGENTA}║{RESET}  {BOLD}Loss Trend (last 10 steps){RESET}{' ' * (width - 30)}║")
+            print(f"{MAGENTA}║{RESET}    {trend_icon} {trend_color}{trend_text}{RESET}{' ' * (width - 22 - len(trend_text))}║")
+            print(f"{MAGENTA}║{RESET}    {recent_losses[0]:.4f} → {recent_losses[-1]:.4f} {DIM}(Δ {recent_losses[-1] - recent_losses[0]:+.4f}){RESET}{' ' * (width - 44)}║")
 
         # Time estimates
         time_remaining = self.estimate_time_remaining()
-        if time_remaining:
-            print(f"⏱️  Estimated Time Remaining: {time_remaining}")
-            print()
+        if time_remaining or self.start_time:
+            print(f"{MAGENTA}╠{'─' * (width - 2)}╣{RESET}")
+            print(f"{MAGENTA}║{RESET}  {BOLD}⏱️  Time{RESET}{' ' * (width - 13)}║")
 
-        if self.start_time:
-            elapsed = datetime.now() - self.start_time
-            print(f"⏱️  Elapsed Time: {str(elapsed).split('.')[0]}")
-            print()
+            if self.start_time:
+                elapsed = datetime.now() - self.start_time
+                elapsed_str = str(elapsed).split('.')[0]
+                print(f"{MAGENTA}║{RESET}    Elapsed:   {CYAN}{elapsed_str}{RESET}{' ' * (width - 26 - len(elapsed_str))}║")
+
+            if time_remaining:
+                print(f"{MAGENTA}║{RESET}    Remaining: {YELLOW}{time_remaining}{RESET}{' ' * (width - 26 - len(time_remaining))}║")
 
         # Stats summary
         if len(self.stats_history) > 1:
-            print(f"📊 Statistics:")
-            print(f"   Total Steps: {len(self.stats_history)}")
-            print(f"   Best Loss:   {min(s['loss'] for s in self.stats_history):.4f}")
-            print(f"   Worst Loss:  {max(s['loss'] for s in self.stats_history):.4f}")
-            print()
+            print(f"{MAGENTA}╠{'─' * (width - 2)}╣{RESET}")
+            print(f"{MAGENTA}║{RESET}  {BOLD}📊 Statistics{RESET}{' ' * (width - 17)}║")
 
-        print("=" * 80)
-        print(f"Last Update: {latest['timestamp'].strftime('%H:%M:%S')}")
-        print("Press Ctrl+C to stop monitoring")
-        print("=" * 80)
+            steps = len(self.stats_history)
+            best_loss = min(s['loss'] for s in self.stats_history)
+            worst_loss = max(s['loss'] for s in self.stats_history)
+            avg_loss = sum(s['loss'] for s in self.stats_history) / len(self.stats_history)
+
+            print(f"{MAGENTA}║{RESET}    Total Steps:  {CYAN}{steps}{RESET}{' ' * (width - 24 - len(str(steps)))}║")
+            print(f"{MAGENTA}║{RESET}    Best Loss:    {GREEN}{best_loss:.4f}{RESET}{' ' * (width - 27)}║")
+            print(f"{MAGENTA}║{RESET}    Avg Loss:     {DIM}{avg_loss:.4f}{RESET}{' ' * (width - 27)}║")
+            print(f"{MAGENTA}║{RESET}    Worst Loss:   {DIM}{worst_loss:.4f}{RESET}{' ' * (width - 27)}║")
+
+        print(f"{MAGENTA}╚{'═' * (width - 2)}╝{RESET}")
+        print()
+        print(f"{DIM}  Press Ctrl+C to stop monitoring{RESET}")
+        print()
 
 
 def monitor_training(log_file: str, interval: int = 5):
