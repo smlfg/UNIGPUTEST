@@ -1,0 +1,299 @@
+[
+  {
+    "id": "segment_01",
+    "timespan": "00:00 - 00:08",
+    "description": "Intro mit Text-Overlay und Sprecher",
+    "technical": "Statische Halbtotale, helles Tageslicht, leicht bedeckt",
+    "prompt": "Medium shot of a man in blue shirt holding a document (building voucher) in a sunny outdoor setting, centered composition, natural daylight with slight cloud cover, professional yet informal atmosphere. Text overlay appears: \"Mauer Apple Tree Competition 2025 Bündnis 90 die Grünen\". Static camera, documentary style, 4K quality, natural colors, shallow depth of field with background slightly blurred.",
+    "continuity": "Etabliere den visuellen Stil: helles Tageslicht, natürliche Farben, dokumentarischer Look",
+    "seed": 1001
+  },
+  {
+    "id": "segment_02",
+    "timespan": "00:08 - 00:16",
+    "description": "Apfelbaum-Präsentation in Baumschule",
+    "technical": "Statische Halbtotale, heller sonniger Tag",
+    "prompt": "Medium shot of a young apple tree sapling being held up by hands in a tree nursery, bright sunny daylight, outdoor garden center setting with plants in background, the tree fills most of the frame, informative atmosphere. Text overlay lists required items. Static camera, documentary style, natural lighting, crisp focus on the tree.",
+    "continuity": "Gleiche Lichtverhältnisse wie Segment 1, Außenbereich bleibt konsistent",
+    "seed": 1002
+  },
+  {
+    "id": "segment_03",
+    "timespan": "00:16 - 00:24",
+    "description": "Detail-Aufnahme Apfelsorte",
+    "technical": "Halbtotale mit subtiler Schwenkbewegung",
+    "prompt": "Close-up to medium shot of an apple tree variety labeled \"Goldperme\", focusing on trunk and crown, subtle slow tilt camera movement from bottom to top showing the entire tree, bright daylight, educational atmosphere. Text overlay explains variety selection. Natural outdoor lighting, sharp focus, documentary style.",
+    "continuity": "Gleicher Baum wie vorheriges Segment, achte auf Stamm-Konsistenz",
+    "seed": 1003
+  },
+  {
+    "id": "segment_04",
+    "timespan": "00:24 - 00:32",
+    "description": "Sprecher wendet sich an Kamera",
+    "technical": "Statische Nahaufnahme/Halbtotale",
+    "prompt": "Medium close-up of man in blue shirt speaking directly to camera, holding apple tree sapling, bright daylight with direct lighting, personal and engaging atmosphere, outdoor setting, static camera, natural colors, professional documentary style, shallow depth of field.",
+    "continuity": "Gleicher Protagonist wie Segment 1, blaues Hemd, gleicher Baum",
+    "seed": 1004
+  },
+  {
+    "id": "segment_05",
+    "timespan": "00:32 - 00:40",
+    "description": "Baum wird hochgehalten",
+    "technical": "Statische Halbtotale, natürliches Licht",
+    "prompt": "Medium shot of man holding apple tree sapling up high, bright natural daylight, outdoor setting, focused on man and tree trunk, static camera, no text overlays, clean composition, documentary style, 4K quality.",
+    "continuity": "Gleiche Person und Baum, Übergang von Indoor zu Outdoor vorbereiten",
+    "seed": 1005
+  },
+  {
+    "id": "segment_06",
+    "timespan": "00:40 - 00:48",
+    "description": "Ackerland-Panorama",
+    "technical": "Halbtotale/Totale mit Schwenk rechts nach links",
+    "prompt": "Wide shot of fertile farmland field, camera pans slowly from right to left revealing the expansive plot of land, sunny day with bright lighting, active and ready-to-work atmosphere, spade already visible in use, text overlay describes the scene. Smooth camera movement, landscape cinematography, natural colors.",
+    "continuity": "Umgebungswechsel: von Baumschule zu Feld. Etabliere neue Location",
+    "seed": 1006
+  },
+  {
+    "id": "segment_07",
+    "timespan": "00:48 - 00:56",
+    "description": "Detail: Spaten und Pflanzanleitung",
+    "technical": "Nahaufnahme, statische Kamera",
+    "prompt": "Close-up shot of spade stuck in soil, then cut to extreme close-up of planting instruction paper, bright daylight, focused detail-oriented atmosphere, static camera, shallow depth of field, documentary style. Sharp focus on objects, natural earth tones.",
+    "continuity": "Gleiche Feld-Location, Detailaufnahmen als Vorbereitung",
+    "seed": 1007
+  },
+  {
+    "id": "segment_08",
+    "timespan": "00:56 - 01:04",
+    "description": "Mann nähert sich Pflanzloch",
+    "technical": "Halbtotale mit leichter Kamerabewegung",
+    "prompt": "Medium shot of a clearly visible planting hole in ground, man approaches and steps toward the hole, slight tracking camera movement following his motion, bright daylight, atmosphere of progress, text overlay present, documentary style, natural colors.",
+    "continuity": "Gleiche Feld-Location, Protagonist kommt ins Bild",
+    "seed": 1008
+  },
+  {
+    "id": "segment_09",
+    "timespan": "01:04 - 01:12",
+    "description": "Baum wird eingepflanzt",
+    "technical": "Halbtotale/Totale mit Schwenkbewegung",
+    "prompt": "Medium to wide shot of apple tree sapling being placed into prepared hole in ground, slight pan camera movement following the tree placement action, bright daylight, focus on main task of tree planting, documentary style, smooth motion, natural earth colors.",
+    "continuity": "Gleicher Baum wie vorherige Segmente, gleiche Location",
+    "seed": 1009
+  },
+  {
+    "id": "segment_10",
+    "timespan": "01:12 - 01:20",
+    "description": "Grasbüschel für Gießrand",
+    "technical": "Nahaufnahme, statisch",
+    "prompt": "Close-up shot of grass clumps for watering edge lying on ground, static camera, bright daylight, detail focus atmosphere, materials positioned on soil, text overlay describes element, sharp focus, natural colors, documentary style.",
+    "continuity": "Detail-Insert, gleiche Feld-Location und Lichtverhältnisse",
+    "seed": 1010
+  },
+  {
+    "id": "segment_11",
+    "timespan": "01:20 - 01:28",
+    "description": "Rasenfreie Baumscheibe",
+    "technical": "Halbtotale, statisch",
+    "prompt": "Medium shot of lawn-free tree disc (round fleece or mulch) laid ready on ground, man standing beside it, bright daylight with clear visibility, static camera, text overlay present, documentary style, natural colors, overhead-angled composition.",
+    "continuity": "Gleicher Protagonist, gleiche Location",
+    "seed": 1011
+  },
+  {
+    "id": "segment_12",
+    "timespan": "01:28 - 01:36",
+    "description": "Gießkanne Detail",
+    "technical": "Nahaufnahme, statisch",
+    "prompt": "Close-up shot of watering can filled with water ready for use, static camera, bright daylight, detail focus on object, text overlay describes item, green/metallic watering can, sharp focus, natural lighting, documentary style.",
+    "continuity": "Detail-Insert, Vorbereitung für nächste Aktion",
+    "seed": 1012
+  },
+  {
+    "id": "segment_13",
+    "timespan": "01:36 - 01:44",
+    "description": "Grüner Daumen (humorvoll)",
+    "technical": "Nahaufnahme von Mann und Daumen",
+    "prompt": "Close-up shot of man presenting his thumb (symbol of \"green thumb\") to camera with slight smile, focus on thumb and face, bright daylight, humorous direct atmosphere, static camera, text overlay confirms concept, documentary style with playful tone.",
+    "continuity": "Gleicher Protagonist wie vorher, persönliche Ebene",
+    "seed": 1013
+  },
+  {
+    "id": "segment_14",
+    "timespan": "01:44 - 01:52",
+    "description": "Pflanzbottich mit Erde",
+    "technical": "Nahaufnahme, statisch",
+    "prompt": "Close-up shot of planting bucket (pail) filled with soil, static camera, bright daylight, detail focus, text overlay present, natural earth colors, sharp focus on bucket, documentary style.",
+    "continuity": "Detail-Insert, Materialien für Pflanzung",
+    "seed": 1014
+  },
+  {
+    "id": "segment_15",
+    "timespan": "01:52 - 02:00",
+    "description": "Baum wird gegossen",
+    "technical": "Halbtotale, Fokus auf Gießvorgang",
+    "prompt": "Medium shot of apple tree being watered with watering can, water flowing onto soil around tree base, bright daylight, practical implementation atmosphere, focus on watering action, documentary style, natural motion, earth tones.",
+    "continuity": "Gleicher Baum, gleiche Location, praktische Handlung",
+    "seed": 1015
+  },
+  {
+    "id": "segment_16",
+    "timespan": "02:00 - 02:08",
+    "description": "Zwei Männer verdichten Erde",
+    "technical": "Halbtotale, statisch",
+    "prompt": "Medium shot of two men compacting soil around tree by stamping with feet, teamwork atmosphere, bright daylight, focus on community work, static camera, documentary style, natural colors, both men visible in frame.",
+    "continuity": "Zweite Person hinzugefügt, Teamwork-Dynamik",
+    "seed": 1016
+  },
+  {
+    "id": "segment_17",
+    "timespan": "02:08 - 02:16",
+    "description": "Gießrand wird gesetzt",
+    "technical": "Halbtotale, Fokus auf Hände",
+    "prompt": "Medium shot focusing on hands placing grass clumps to create watering rim around tree, bright daylight, detail of action atmosphere, documentary style, natural earth tones, shallow depth of field on hands.",
+    "continuity": "Detail-Fokus, praktische Gartenarbeit",
+    "seed": 1017
+  },
+  {
+    "id": "segment_18",
+    "timespan": "02:16 - 02:24",
+    "description": "Fertigstellung Gießrand",
+    "technical": "Halbtotale mit leichter Schwenkbewegung",
+    "prompt": "Medium shot of watering rim being finalized, slight pan camera movement checking the rim's completion, bright daylight, focused completion atmosphere, documentary style, circular composition showing the rim around tree base.",
+    "continuity": "Gleiche Aktion wie vorheriges Segment, Fortschritt zeigen",
+    "seed": 1018
+  },
+  {
+    "id": "segment_19",
+    "timespan": "02:24 - 02:32",
+    "description": "Mann erklärt Gießrand-Nutzen",
+    "technical": "Halbtotale des fertigen Gießrands",
+    "prompt": "Medium shot of completed watering rim around tree, man explaining its purpose (rainwater retention), bright daylight, explanatory atmosphere, static camera, documentary style, clear view of circular rim structure.",
+    "continuity": "Gleicher Protagonist, zeigt fertige Arbeit",
+    "seed": 1019
+  },
+  {
+    "id": "segment_20",
+    "timespan": "02:32 - 02:40",
+    "description": "Erde wird verdichtet",
+    "technical": "Nahaufnahme der Erde",
+    "prompt": "Close-up shot of soil being compacted around tree base with hands or feet, bright daylight, tactile detail atmosphere, natural earth colors, documentary style, focus on soil texture.",
+    "continuity": "Detail-Insert, finale Arbeitsschritte",
+    "seed": 1020
+  },
+  {
+    "id": "segment_21",
+    "timespan": "02:40 - 02:48",
+    "description": "Begutachtung der Pflanzstelle",
+    "technical": "Halbtotale, statisch",
+    "prompt": "Medium shot of finished planting site being inspected, satisfaction atmosphere, man examining the completed work deemed \"perfectly fitted\", bright daylight, static camera, documentary style, overview of tree and rim.",
+    "continuity": "Übersicht der fertigen Arbeit, Zufriedenheit zeigen",
+    "seed": 1021
+  },
+  {
+    "id": "segment_22",
+    "timespan": "02:48 - 02:56",
+    "description": "Pflanzpfahl wird eingeschlagen",
+    "technical": "Halbtotale, Fokus auf Handlung",
+    "prompt": "Medium shot of second man (Manfred) hammering plant stake into ground with sledgehammer, active dynamic work atmosphere, bright daylight, focus on action, documentary style, motion captured mid-swing.",
+    "continuity": "Zweiter Mann wieder aktiv, dynamische Aktion",
+    "seed": 1022
+  },
+  {
+    "id": "segment_23",
+    "timespan": "02:56 - 03:04",
+    "description": "Auftritt Wachstumsspezialist",
+    "technical": "Halbtotale mit Schwenkbewegung",
+    "prompt": "Medium shot of plant stake driven into ground, camera pans slightly to follow new character entering scene - \"growth specialist\" wearing hat and beard, bright daylight, humorous mood shift atmosphere, documentary style with playful tone.",
+    "continuity": "Neue Figur einführen: Hut, Bart, theatralische Präsenz",
+    "seed": 1023
+  },
+  {
+    "id": "segment_24",
+    "timespan": "03:04 - 03:12",
+    "description": "Spezialist spricht zur Kamera",
+    "technical": "Statische Halbtotale",
+    "prompt": "Medium shot of bearded man with hat speaking directly to camera with theatrical expression, bright daylight, humorous theatrical atmosphere, static camera, documentary style with comedic element, character positioned center frame.",
+    "continuity": "Gleicher Charakter, theatralische Performance",
+    "seed": 1024
+  },
+  {
+    "id": "segment_25",
+    "timespan": "03:12 - 03:20",
+    "description": "Wachstumselixier-Flasche",
+    "technical": "Nahaufnahme von Flasche und Mann",
+    "prompt": "Close-up shot of man holding bottle labeled \"growth elixir\" and small vessel, detail of props, bright daylight, focus on ritual atmosphere, documentary style with theatrical element, sharp focus on bottle.",
+    "continuity": "Gleicher Charakter mit Hut, Requisit einführen",
+    "seed": 1025
+  },
+  {
+    "id": "segment_26",
+    "timespan": "03:20 - 03:28",
+    "description": "Elixier wird gegossen",
+    "technical": "Nahaufnahme der Handlung",
+    "prompt": "Close-up shot of liquid being poured from bottle into soil around tree base, ritual focus atmosphere, bright daylight, documentary style with magical realism element, focus on pouring action.",
+    "continuity": "Gleiche Flasche und Hand, rituelle Handlung",
+    "seed": 1026
+  },
+  {
+    "id": "segment_27",
+    "timespan": "03:28 - 03:36",
+    "description": "Zaubergeste",
+    "technical": "Halbtotale mit Fokus auf Geste",
+    "prompt": "Medium shot of bearded man in hat making magical gesture with hands, speaking spell words \"im Salbaum\", theatrical staging atmosphere, bright daylight, documentary style with fantasy element, dynamic hand movement.",
+    "continuity": "Gleicher Charakter, theatralische Performance fortsetzen",
+    "seed": 1027
+  },
+  {
+    "id": "segment_28",
+    "timespan": "03:36 - 03:44",
+    "description": "Zauberspruch fortgesetzt",
+    "technical": "Halbtotale, Fokus auf Mann",
+    "prompt": "Medium shot of man continuing spell incantation \"Wachs in großen Raum Wachs wachs\", theatrical gestures, bright daylight, humorous magical atmosphere, documentary style with comedic fantasy element.",
+    "continuity": "Gleicher Charakter, gleiche Performance",
+    "seed": 1028
+  },
+  {
+    "id": "segment_29",
+    "timespan": "03:44 - 03:52",
+    "description": "Reaktion auf Zauber",
+    "technical": "Halbtotale mit Fokus auf ersten Mann",
+    "prompt": "Medium shot of first man (in blue shirt) turning around with surprised expression saying \"Wow ein Superzauber ist gelungen\", atmosphere of surprise and humorous reveal, bright daylight, documentary style with comedic timing.",
+    "continuity": "Zurück zum ersten Protagonisten, Überraschung zeigen",
+    "seed": 1029
+  },
+  {
+    "id": "segment_30",
+    "timespan": "03:52 - 04:00",
+    "description": "Gewachsener Baum erscheint",
+    "technical": "Halbtotale von Baum und Männern",
+    "prompt": "Medium shot of significantly larger grown apple tree standing where sapling was planted, two men standing beside it, bright daylight, final staging atmosphere, documentary style with magical realism, tree clearly taller and more mature.",
+    "continuity": "WICHTIG: Größerer Baum ersetzt Setzling, gleiche Location, dramatischer Unterschied",
+    "seed": 1030
+  },
+  {
+    "id": "segment_31",
+    "timespan": "04:00 - 04:08",
+    "description": "Mann umarmt Baum",
+    "technical": "Halbtotale, statisch",
+    "prompt": "Medium shot of man in blue shirt hugging tree trunk while speaking to camera, emotional closing atmosphere, bright daylight, static camera, documentary style, heartfelt moment, connection between man and nature.",
+    "continuity": "Erster Protagonist mit gewachsenem Baum, emotionale Bindung",
+    "seed": 1031
+  },
+  {
+    "id": "segment_32",
+    "timespan": "04:08 - 04:16",
+    "description": "Klimawandel-Botschaft",
+    "technical": "Halbtotale, statisch",
+    "prompt": "Medium shot of man delivering closing message about climate change, serious yet hopeful atmosphere, bright daylight, static camera, documentary style, direct address to camera, tree visible in background.",
+    "continuity": "Gleiche Szene, wichtige Botschaft, Ernst und Hoffnung",
+    "seed": 1032
+  },
+  {
+    "id": "segment_33",
+    "timespan": "04:16 - 04:24",
+    "description": "Finale mit beiden Männern",
+    "technical": "Halbtotale",
+    "prompt": "Medium shot of both men together, growth specialist stepping into frame, saying \"Tada\" with cheerful closing atmosphere, bright daylight, documentary style with lighthearted ending, both characters visible, tree in background.",
+    "continuity": "Beide Charaktere zusammen, fröhlicher Abschluss",
+    "seed": 1033
+  }
+]

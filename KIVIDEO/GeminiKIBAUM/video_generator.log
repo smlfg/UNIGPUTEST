@@ -1,0 +1,25 @@
+2025-10-29 18:37:39,679 - INFO - FFmpeg is installed.
+2025-10-29 18:37:39,679 - INFO - --- Starting Video Generation Workflow ---
+2025-10-29 18:37:39,679 - INFO - Optimizing prompt with Ollama model: llama3.2:3b
+2025-10-29 18:37:39,713 - ERROR - Error connecting to Ollama: [Errno 111] Connection refused
+2025-10-29 18:37:39,714 - INFO - Starting video generation with ComfyUI.
+2025-10-29 18:37:39,715 - ERROR - Failed to connect to ComfyUI WebSocket: [Errno 111] Connection refused
+2025-10-29 18:37:39,715 - ERROR - Frame generation failed. Aborting.
+2025-10-29 18:48:20,747 - INFO - FFmpeg is installed.
+2025-10-29 18:48:20,748 - INFO - --- Starting Video Generation Workflow ---
+2025-10-29 18:48:20,748 - INFO - Optimizing prompt with Ollama model: llama3.2:3b
+2025-10-29 18:48:20,792 - INFO - HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 404 Not Found"
+2025-10-29 18:48:20,793 - ERROR - Error connecting to Ollama: model 'llama3.2:3b' not found
+2025-10-29 18:48:20,794 - INFO - Starting video generation with ComfyUI.
+2025-10-29 18:48:20,808 - ERROR - Failed to queue prompt in ComfyUI: 400 Client Error: Bad Request for url: http://localhost:8188/prompt
+2025-10-29 18:48:20,809 - ERROR - Frame generation failed. Aborting.
+2025-10-29 19:23:11,040 - INFO - FFmpeg is installed.
+2025-10-29 19:23:11,041 - INFO - --- Starting Video Generation Workflow ---
+2025-10-29 19:23:11,041 - INFO - Optimizing prompt with Ollama model: llama3.2:3b
+2025-10-29 21:25:05,568 - INFO - HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2025-10-29 21:25:05,614 - INFO - Optimized prompt: Here's an expanded prompt:
+
+A medium shot, 2/3 rule framing, of a man in a light blue button-down shirt with subtle texture and a relaxed fit, holding a worn leather-bound document in his right hand, with a slight crumple to the corner, centered composition within a lush green outdoor setting, featuring tall trees with gnarled branches and a few leaves rustling gently in the breeze, with a warm sunny atmosphere casting long shadows across the scene, subtle cloud cover drifting lazily across the sky, soft natural daylight filtering through the canopy above, capturing the nuances of the golden hour, professional attire but relaxed demeanor, informal setting with hints of rustic elegance, static camera with minimal panning or tilting, documentary style cinematography, 4K resolution at a high frame rate for crisp clarity and detail, rich natural colors with subtle texture, shallow depth of field isolating the subject from the background, which is slightly blurred to emphasize the intimacy of the scene.
+2025-10-29 21:25:05,637 - INFO - Starting video generation with ComfyUI.
+2025-10-29 21:25:06,512 - ERROR - Failed to queue prompt in ComfyUI: 400 Client Error: Bad Request for url: http://localhost:8188/prompt
+2025-10-29 21:25:06,520 - ERROR - Frame generation failed. Aborting.
