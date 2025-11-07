@@ -1,0 +1,40 @@
+# GPU Testing Suite Requirements
+# For NVIDIA L40S (48GB VRAM)
+
+# Core ML Frameworks
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+tensorflow>=2.13.0
+
+# GPU Acceleration Libraries
+cupy-cuda12x>=12.0.0  # CUDA 12.x support
+numba>=0.57.0
+
+# Benchmarking and Monitoring
+nvidia-ml-py3>=7.352.0
+gpustat>=1.1.1
+
+# Utilities
+numpy>=1.24.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Optional: Additional ML Libraries
+# scikit-learn>=1.3.0
+# xgboost>=2.0.0
+# lightgbm>=4.0.0
+
+# Optional: Computer Vision
+# opencv-python>=4.8.0
+# pillow>=10.0.0
+
+# Optional: NLP
+# transformers>=4.30.0
+# tokenizers>=0.13.0
+
+# Development Tools
+pytest>=7.4.0
+jupyter>=1.0.0
+ipython>=8.14.0
