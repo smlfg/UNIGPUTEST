@@ -1,0 +1,26 @@
+# Basis Requirements für L40S Tests
+torch>=2.1.0
+torchvision>=0.16.0
+torchaudio>=2.1.0
+
+# LLM Inference
+transformers>=4.35.0
+accelerate>=0.25.0
+bitsandbytes>=0.41.0
+sentencepiece>=0.1.99
+
+# Image Generation
+diffusers>=0.24.0
+safetensors>=0.4.0
+invisible-watermark>=0.2.0
+
+# Optional aber empfohlen
+# xformers>=0.0.22  # Für bessere Memory Effizienz
+# flash-attn>=2.3.0  # Für schnellere Attention
+
+# Production Inference Frameworks (optional)
+# vllm>=0.2.0
+# triton>=2.1.0
+
+# Monitoring
+# nvidia-ml-py3>=7.352.0
