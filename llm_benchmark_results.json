@@ -1,0 +1,232 @@
+{
+  "benchmark_info": {
+    "gpu_model": "NVIDIA L40S",
+    "gpu_memory_gb": 48,
+    "cuda_version": "12.1",
+    "driver_version": "530.30.02",
+    "date": "2024-01-15",
+    "framework": "vLLM 0.2.7 / HuggingFace Transformers 4.36.0"
+  },
+  "benchmarks": [
+    {
+      "model_name": "meta-llama/Llama-2-7b-hf",
+      "model_parameters": 7000000000,
+      "quantization": "fp16",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 142.5,
+      "first_token_latency_ms": 28.3,
+      "memory_usage_gb": 14.2,
+      "gpu_utilization_percent": 87
+    },
+    {
+      "model_name": "meta-llama/Llama-2-7b-hf",
+      "model_parameters": 7000000000,
+      "quantization": "8bit",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 68.4,
+      "first_token_latency_ms": 45.7,
+      "memory_usage_gb": 8.1,
+      "gpu_utilization_percent": 62
+    },
+    {
+      "model_name": "meta-llama/Llama-2-7b-hf",
+      "model_parameters": 7000000000,
+      "quantization": "4bit-awq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 156.8,
+      "first_token_latency_ms": 24.1,
+      "memory_usage_gb": 4.8,
+      "gpu_utilization_percent": 91
+    },
+    {
+      "model_name": "meta-llama/Llama-2-7b-hf",
+      "model_parameters": 7000000000,
+      "quantization": "4bit-gptq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 148.2,
+      "first_token_latency_ms": 26.5,
+      "memory_usage_gb": 5.2,
+      "gpu_utilization_percent": 89
+    },
+    {
+      "model_name": "meta-llama/Llama-2-13b-hf",
+      "model_parameters": 13000000000,
+      "quantization": "fp16",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 98.7,
+      "first_token_latency_ms": 38.2,
+      "memory_usage_gb": 26.4,
+      "gpu_utilization_percent": 92
+    },
+    {
+      "model_name": "meta-llama/Llama-2-13b-hf",
+      "model_parameters": 13000000000,
+      "quantization": "8bit",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 51.3,
+      "first_token_latency_ms": 58.9,
+      "memory_usage_gb": 14.8,
+      "gpu_utilization_percent": 68
+    },
+    {
+      "model_name": "meta-llama/Llama-2-13b-hf",
+      "model_parameters": 13000000000,
+      "quantization": "4bit-awq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 124.3,
+      "first_token_latency_ms": 32.1,
+      "memory_usage_gb": 8.9,
+      "gpu_utilization_percent": 94
+    },
+    {
+      "model_name": "meta-llama/Llama-2-70b-hf",
+      "model_parameters": 70000000000,
+      "quantization": "4bit-awq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 42.8,
+      "first_token_latency_ms": 124.5,
+      "memory_usage_gb": 40.2,
+      "gpu_utilization_percent": 96
+    },
+    {
+      "model_name": "meta-llama/Llama-2-70b-hf",
+      "model_parameters": 70000000000,
+      "quantization": "4bit-gptq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 38.4,
+      "first_token_latency_ms": 135.2,
+      "memory_usage_gb": 42.7,
+      "gpu_utilization_percent": 95
+    },
+    {
+      "model_name": "mistralai/Mistral-7B-v0.1",
+      "model_parameters": 7300000000,
+      "quantization": "fp16",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 148.9,
+      "first_token_latency_ms": 26.8,
+      "memory_usage_gb": 14.8,
+      "gpu_utilization_percent": 88
+    },
+    {
+      "model_name": "mistralai/Mistral-7B-v0.1",
+      "model_parameters": 7300000000,
+      "quantization": "4bit-awq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 162.3,
+      "first_token_latency_ms": 22.9,
+      "memory_usage_gb": 5.1,
+      "gpu_utilization_percent": 92
+    },
+    {
+      "model_name": "mistralai/Mixtral-8x7B-v0.1",
+      "model_parameters": 46700000000,
+      "quantization": "4bit-awq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 56.7,
+      "first_token_latency_ms": 89.3,
+      "memory_usage_gb": 28.4,
+      "gpu_utilization_percent": 94
+    },
+    {
+      "model_name": "mistralai/Mixtral-8x7B-v0.1",
+      "model_parameters": 46700000000,
+      "quantization": "8bit",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 32.1,
+      "first_token_latency_ms": 112.7,
+      "memory_usage_gb": 24.6,
+      "gpu_utilization_percent": 78
+    },
+    {
+      "model_name": "codellama/CodeLlama-34b-hf",
+      "model_parameters": 34000000000,
+      "quantization": "4bit-awq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 68.4,
+      "first_token_latency_ms": 72.1,
+      "memory_usage_gb": 19.8,
+      "gpu_utilization_percent": 93
+    },
+    {
+      "model_name": "EleutherAI/gpt-j-6b",
+      "model_parameters": 6000000000,
+      "quantization": "fp16",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 156.2,
+      "first_token_latency_ms": 24.7,
+      "memory_usage_gb": 12.3,
+      "gpu_utilization_percent": 85
+    },
+    {
+      "model_name": "EleutherAI/gpt-j-6b",
+      "model_parameters": 6000000000,
+      "quantization": "4bit-awq",
+      "batch_size": 1,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 172.5,
+      "first_token_latency_ms": 21.3,
+      "memory_usage_gb": 4.2,
+      "gpu_utilization_percent": 89
+    },
+    {
+      "model_name": "meta-llama/Llama-2-7b-hf",
+      "model_parameters": 7000000000,
+      "quantization": "fp16",
+      "batch_size": 4,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 389.2,
+      "first_token_latency_ms": 52.3,
+      "memory_usage_gb": 18.7,
+      "gpu_utilization_percent": 95
+    },
+    {
+      "model_name": "meta-llama/Llama-2-7b-hf",
+      "model_parameters": 7000000000,
+      "quantization": "4bit-awq",
+      "batch_size": 8,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 724.6,
+      "first_token_latency_ms": 84.2,
+      "memory_usage_gb": 12.3,
+      "gpu_utilization_percent": 97
+    },
+    {
+      "model_name": "meta-llama/Llama-2-13b-hf",
+      "model_parameters": 13000000000,
+      "quantization": "4bit-awq",
+      "batch_size": 4,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 342.8,
+      "first_token_latency_ms": 68.4,
+      "memory_usage_gb": 16.2,
+      "gpu_utilization_percent": 96
+    },
+    {
+      "model_name": "mistralai/Mistral-7B-v0.1",
+      "model_parameters": 7300000000,
+      "quantization": "fp16",
+      "batch_size": 8,
+      "context_length": 2048,
+      "throughput_tokens_per_sec": 612.4,
+      "first_token_latency_ms": 78.9,
+      "memory_usage_gb": 24.1,
+      "gpu_utilization_percent": 96
+    }
+  ]
+}

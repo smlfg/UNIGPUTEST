@@ -73,3 +73,4 @@ wandb/
 outputs/
 results/
 generated_images/
+analysis_output/
