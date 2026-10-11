@@ -4,9 +4,9 @@ Efficient similarity search for dense vectors
 """
 
 from typing import List, Tuple, Optional
+import json
 import numpy as np
 import faiss
-import pickle
 from pathlib import Path
 
 
@@ -152,10 +152,13 @@ class VectorStore:
         results_metadata = []
 
         for score, idx in zip(scores[0], indices[0]):
-            if idx < len(self.texts):
-                results_texts.append(self.texts[idx])
-                results_scores.append(float(score))
-                results_metadata.append(self.metadata[idx])
+            # FAISS pads missing neighbors with -1. Negative indexes must not
+            # wrap around to a real chunk.
+            if idx < 0 or idx >= len(self.texts):
+                continue
+            results_texts.append(self.texts[idx])
+            results_scores.append(float(score))
+            results_metadata.append(self.metadata[idx])
 
         return results_texts, results_scores, results_metadata
 
@@ -182,8 +185,8 @@ class VectorStore:
             'metric': self.metric,
         }
 
-        with open(save_dir / "metadata.pkl", 'wb') as f:
-            pickle.dump(metadata_dict, f)
+        with open(save_dir / "metadata.json", 'w', encoding='utf-8') as f:
+            json.dump(metadata_dict, f)
 
         print(f"✅ Vector store saved to {save_path}")
 
@@ -200,13 +203,14 @@ class VectorStore:
             VectorStore instance
         """
         load_dir = Path(load_path)
+        metadata_path = load_dir / "metadata.json"
 
-        if not load_dir.exists():
+        if not metadata_path.is_file():
             raise FileNotFoundError(f"Vector store not found: {load_path}")
 
-        # Load metadata
-        with open(load_dir / "metadata.pkl", 'rb') as f:
-            metadata_dict = pickle.load(f)
+        # Load metadata. JSON only — never pickle, which can execute code.
+        with open(metadata_path, 'r', encoding='utf-8') as f:
+            metadata_dict = json.load(f)
 
         # Create instance
         store = cls(

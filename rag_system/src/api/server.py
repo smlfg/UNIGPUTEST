@@ -28,6 +28,19 @@ class QueryRequest(BaseModel):
     max_tokens: int = Field(512, description="Maximum tokens to generate", ge=50, le=2048)
 
 
+class InitializeRequest(BaseModel):
+    """Initialize request model (JSON body)"""
+    model_name: str = Field(
+        "mistralai/Mistral-Nemo-Instruct-2407",
+        description="LLM model name",
+    )
+    vector_store_path: Optional[str] = Field(
+        None,
+        description="Path to saved vector store",
+    )
+    load_in_4bit: bool = Field(True, description="Use 4-bit quantization")
+
+
 class QueryResponse(BaseModel):
     """Query response model"""
     query: str
@@ -168,6 +181,15 @@ class RAGSystem:
             raise RuntimeError("RAG system not initialized")
 
         start_time = time.time()
+
+        if self.vector_store.index.ntotal == 0 and not self.bm25_retriever.texts:
+            return {
+                'query': query,
+                'answer': "No documents have been indexed yet.",
+                'context': [],
+                'scores': [],
+                'processing_time': time.time() - start_time,
+            }
 
         # 1. Retrieve context
         context_texts, scores, metadata = self.hybrid_retriever.search(
@@ -327,30 +349,24 @@ async def query(request: QueryRequest):
 
 
 @app.post("/initialize")
-async def initialize_system(
-    model_name: str = "mistralai/Mistral-Nemo-Instruct-2407",
-    vector_store_path: Optional[str] = None,
-    load_in_4bit: bool = True
-):
+async def initialize_system(request: InitializeRequest):
     """
     Initialize RAG system
 
     Args:
-        model_name: LLM model name
-        vector_store_path: Path to saved vector store
-        load_in_4bit: Use 4-bit quantization
+        request: JSON body with model name, optional vector store path, and quantization flag
 
     Returns:
         Initialization status
     """
     try:
         rag_system.initialize(
-            vector_store_path=vector_store_path,
-            model_name=model_name,
-            load_in_4bit=load_in_4bit
+            vector_store_path=request.vector_store_path,
+            model_name=request.model_name,
+            load_in_4bit=request.load_in_4bit
         )
 
-        return {"status": "initialized", "model": model_name}
+        return {"status": "initialized", "model": request.model_name}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Initialization failed: {str(e)}")

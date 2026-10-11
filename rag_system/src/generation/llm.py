@@ -100,6 +100,7 @@ class LLMGenerator:
             print(f"⚠️  Input length ({input_length}) exceeds max context ({self.max_context_length}), truncating...")
             inputs['input_ids'] = inputs['input_ids'][:, -self.max_context_length:]
             inputs['attention_mask'] = inputs['attention_mask'][:, -self.max_context_length:]
+            input_length = inputs['input_ids'].shape[1]
 
         # Generate
         with torch.no_grad():
@@ -114,14 +115,15 @@ class LLMGenerator:
                 pad_token_id=self.tokenizer.eos_token_id
             )
 
-        # Decode
-        generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        # Decode only the completion. skip_special_tokens strips tokens such as
+        # <s> and [INST] from the full sequence, so a string prefix check against
+        # the original prompt never matches.
+        generated_text = self.tokenizer.decode(
+            outputs[0][input_length:],
+            skip_special_tokens=True,
+        )
 
-        # Remove prompt from output
-        if generated_text.startswith(prompt):
-            generated_text = generated_text[len(prompt):].strip()
-
-        return generated_text
+        return generated_text.strip()
 
     def generate_rag_response(
         self,

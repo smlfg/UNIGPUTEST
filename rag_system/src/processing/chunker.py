@@ -40,6 +40,14 @@ class TextChunker:
             chunk_overlap: Overlap between chunks in tokens
             encoding_name: Tiktoken encoding name
         """
+        if chunk_size <= 0:
+            raise ValueError(f"chunk_size must be positive, got {chunk_size}")
+        if chunk_overlap < 0 or chunk_overlap >= chunk_size:
+            raise ValueError(
+                f"chunk_overlap must be >= 0 and < chunk_size "
+                f"(got chunk_size={chunk_size}, chunk_overlap={chunk_overlap})"
+            )
+
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
 
@@ -103,8 +111,8 @@ class TextChunker:
 
             chunks.append(chunk)
 
-            # Move to next chunk with overlap
-            start_idx += self.chunk_size - self.chunk_overlap
+            # Advance by at least one token so overlap >= size cannot hang.
+            start_idx += max(1, self.chunk_size - self.chunk_overlap)
             chunk_index += 1
 
         return chunks
@@ -113,9 +121,10 @@ class TextChunker:
         """Fallback: chunk using word count (approximation)"""
         words = text.split()
 
-        # Approximate: 1 token ≈ 0.75 words
-        words_per_chunk = int(self.chunk_size * 0.75)
-        words_overlap = int(self.chunk_overlap * 0.75)
+        # Approximate: 1 token ≈ 0.75 words. Keep a positive step even when
+        # integer truncation would otherwise make the window size zero.
+        words_per_chunk = max(1, int(self.chunk_size * 0.75))
+        words_overlap = min(int(self.chunk_overlap * 0.75), words_per_chunk - 1)
 
         chunks = []
         start_idx = 0
@@ -141,8 +150,8 @@ class TextChunker:
 
             chunks.append(chunk)
 
-            # Move to next chunk with overlap
-            start_idx += words_per_chunk - words_overlap
+            # Advance by at least one word so overlap >= size cannot hang.
+            start_idx += max(1, words_per_chunk - words_overlap)
             chunk_index += 1
 
         return chunks

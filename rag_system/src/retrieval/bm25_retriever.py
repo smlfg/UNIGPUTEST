@@ -5,7 +5,7 @@ Keyword-based retrieval using BM25 algorithm
 
 from typing import List, Tuple
 from rank_bm25 import BM25Okapi
-import pickle
+import json
 from pathlib import Path
 
 
@@ -55,26 +55,27 @@ class BM25Retriever:
             metadata: Optional metadata for each text
             doc_ids: Optional document IDs
         """
-        # Tokenize all texts
-        tokenized_corpus = [self.tokenizer(text) for text in texts]
+        if not texts:
+            return
 
-        # Create BM25 index
-        self.bm25 = BM25Okapi(tokenized_corpus)
-
-        # Store texts and metadata
-        self.texts = texts
+        # Append so later /index calls keep previously indexed chunks.
+        # BM25Okapi has no incremental update, so rebuild from the full corpus.
+        self.texts.extend(texts)
 
         if metadata:
-            self.metadata = metadata
+            self.metadata.extend(metadata)
         else:
-            self.metadata = [{}] * len(texts)
+            self.metadata.extend([{} for _ in texts])
 
         if doc_ids:
-            self.doc_ids = doc_ids
+            self.doc_ids.extend(doc_ids)
         else:
-            self.doc_ids = [''] * len(texts)
+            self.doc_ids.extend(['' for _ in texts])
 
-        print(f"✅ BM25 index built ({len(texts)} documents)")
+        tokenized_corpus = [self.tokenizer(text) for text in self.texts]
+        self.bm25 = BM25Okapi(tokenized_corpus)
+
+        print(f"✅ BM25 index built ({len(self.texts)} documents)")
 
     def search(
         self,
@@ -91,8 +92,8 @@ class BM25Retriever:
         Returns:
             Tuple of (texts, scores, metadata)
         """
-        if self.bm25 is None:
-            raise ValueError("BM25 index not initialized. Call add_texts() first.")
+        if self.bm25 is None or not self.texts:
+            return [], [], []
 
         # Tokenize query
         query_tokens = self.tokenizer(query)
@@ -120,15 +121,16 @@ class BM25Retriever:
         save_dir = Path(save_path)
         save_dir.mkdir(parents=True, exist_ok=True)
 
+        # Persist the corpus only. The BM25 index is rebuilt on load so
+        # untrusted files cannot be executed via pickle.
         data = {
-            'bm25': self.bm25,
             'texts': self.texts,
             'metadata': self.metadata,
             'doc_ids': self.doc_ids,
         }
 
-        with open(save_dir / "bm25.pkl", 'wb') as f:
-            pickle.dump(data, f)
+        with open(save_dir / "bm25.json", 'w', encoding='utf-8') as f:
+            json.dump(data, f)
 
         print(f"✅ BM25 index saved to {save_path}")
 
@@ -144,18 +146,21 @@ class BM25Retriever:
             BM25Retriever instance
         """
         load_dir = Path(load_path)
+        data_path = load_dir / "bm25.json"
 
-        if not load_dir.exists():
+        if not data_path.is_file():
             raise FileNotFoundError(f"BM25 index not found: {load_path}")
 
-        with open(load_dir / "bm25.pkl", 'rb') as f:
-            data = pickle.load(f)
+        with open(data_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
 
         retriever = cls()
-        retriever.bm25 = data['bm25']
         retriever.texts = data['texts']
         retriever.metadata = data['metadata']
         retriever.doc_ids = data['doc_ids']
+        if retriever.texts:
+            tokenized_corpus = [retriever.tokenizer(text) for text in retriever.texts]
+            retriever.bm25 = BM25Okapi(tokenized_corpus)
 
         print(f"✅ BM25 index loaded from {load_path} ({len(retriever.texts)} documents)")
 

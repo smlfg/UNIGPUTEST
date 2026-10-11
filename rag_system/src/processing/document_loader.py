@@ -141,7 +141,9 @@ class DocumentLoader:
             reader = PdfReader(str(path))
             text = ""
             for page in reader.pages:
-                text += page.extract_text() + "\n"
+                # Image-only or malformed pages return None; skip just that page.
+                page_text = page.extract_text() or ""
+                text += page_text + "\n"
             return text.strip()
         except Exception as e:
             print(f"❌ Error reading PDF {path}: {e}")
