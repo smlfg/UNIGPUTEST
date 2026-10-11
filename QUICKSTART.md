@@ -103,7 +103,7 @@ gpt2            4bit     3.80         0.13         115.00       ✓
 
 ```python
 # In Python oder Jupyter
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
 
 model_name = "meta-llama/Llama-2-7b-hf"  # Braucht HF Access Token
@@ -118,14 +118,14 @@ model = AutoModelForCausalLM.from_pretrained(
 # 8-bit (~7GB) - Empfohlen!
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
-    load_in_8bit=True,
+    quantization_config=BitsAndBytesConfig(load_in_8bit=True),
     device_map="auto"
 )
 
 # 4-bit (~3.5GB) - Noch besser!
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
-    load_in_4bit=True,
+    quantization_config=BitsAndBytesConfig(load_in_4bit=True),
     device_map="auto"
 )
 ```
@@ -133,14 +133,14 @@ model = AutoModelForCausalLM.from_pretrained(
 ### Schritt 3.2: Mistral 7B (keine Token nötig!)
 
 ```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 model_name = "mistralai/Mistral-7B-v0.1"
 
 # 4-bit Loading (empfohlen)
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
-    load_in_4bit=True,
+    quantization_config=BitsAndBytesConfig(load_in_4bit=True),
     device_map="auto"
 )
 

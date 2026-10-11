@@ -19,7 +19,6 @@ pip install accelerate
 echo ""
 echo "Installing quantization libraries..."
 pip install bitsandbytes
-pip install auto-gptq
 
 echo ""
 echo "Installing tokenizers..."

@@ -129,5 +129,8 @@ def main():
        3. Test with your own prompts!
     """)
 
+    if passed != total:
+        sys.exit(1)
+
 if __name__ == "__main__":
     main()

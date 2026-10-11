@@ -5,7 +5,7 @@ Demonstrates FP16, 8-bit, and 4-bit loading
 """
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import time
 import gc
 
@@ -36,9 +36,9 @@ def test_mistral(quantization=None):
     }
 
     if quantization == "8bit":
-        load_kwargs["load_in_8bit"] = True
+        load_kwargs["quantization_config"] = BitsAndBytesConfig(load_in_8bit=True)
     elif quantization == "4bit":
-        load_kwargs["load_in_4bit"] = True
+        load_kwargs["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True)
 
     try:
         # Load model
@@ -73,6 +73,7 @@ def test_mistral(quantization=None):
             outputs = model.generate(
                 **inputs,
                 max_new_tokens=100,
+                min_new_tokens=100,
                 do_sample=True,
                 temperature=0.7,
                 top_p=0.9
@@ -80,7 +81,8 @@ def test_mistral(quantization=None):
         gen_time = time.time() - start
 
         text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        tokens_per_sec = 100 / gen_time
+        generated_tokens = outputs.shape[-1] - inputs["input_ids"].shape[-1]
+        tokens_per_sec = generated_tokens / gen_time
 
         print(f"Generated text:\n{text}\n")
         print(f"⚡ Speed: {tokens_per_sec:.1f} tokens/sec")

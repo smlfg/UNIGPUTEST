@@ -5,7 +5,7 @@ Tests different quantization methods on NVIDIA L40S
 """
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import time
 import gc
 
@@ -58,9 +58,9 @@ def test_model_loading(model_name="gpt2", quantization=None):
         }
 
         if quantization == "8bit":
-            load_kwargs["load_in_8bit"] = True
+            load_kwargs["quantization_config"] = BitsAndBytesConfig(load_in_8bit=True)
         elif quantization == "4bit":
-            load_kwargs["load_in_4bit"] = True
+            load_kwargs["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True)
 
         # Load model
         print(f"Loading model with {quantization if quantization else 'FP16'}...")
@@ -93,18 +93,20 @@ def test_model_loading(model_name="gpt2", quantization=None):
             outputs = model.generate(
                 **inputs,
                 max_new_tokens=50,
+                min_new_tokens=50,
                 do_sample=True,
                 temperature=0.7,
                 top_p=0.9
             )
 
         inference_time = time.time() - start_time
+        generated_tokens = outputs.shape[-1] - inputs["input_ids"].shape[-1]
 
         generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
         print(f"\n✓ Inference completed!")
         print(f"  Time: {inference_time:.2f}s")
-        print(f"  Tokens/sec: {50/inference_time:.2f}")
+        print(f"  Tokens/sec: {generated_tokens/inference_time:.2f}")
         print(f"\nGenerated text:")
         print(f"  {generated_text}")
 
@@ -125,7 +127,7 @@ def test_model_loading(model_name="gpt2", quantization=None):
             'load_time': load_time,
             'inference_time': inference_time,
             'memory_used': load_mem_alloc - start_mem_alloc,
-            'tokens_per_sec': 50/inference_time
+            'tokens_per_sec': generated_tokens/inference_time
         }
 
     except Exception as e:

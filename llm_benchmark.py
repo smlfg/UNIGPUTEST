@@ -50,7 +50,7 @@ MODELLE ZUM TESTEN:
 """
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import time
 import json
 import gc
@@ -195,6 +195,7 @@ class LLMBenchmark:
                 outputs = model.generate(
                     **inputs,
                     max_new_tokens=num_tokens,
+                    min_new_tokens=num_tokens,
                     do_sample=True,
                     temperature=0.8,
                     top_p=0.9
@@ -202,7 +203,8 @@ class LLMBenchmark:
 
             torch.cuda.synchronize()
             throughput_time = time.time() - throughput_start
-            throughput = num_tokens / throughput_time
+            generated_tokens = outputs.shape[-1] - inputs["input_ids"].shape[-1]
+            throughput = generated_tokens / throughput_time
 
             # Generierter Text (für Qualitätsprüfung)
             generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
@@ -221,7 +223,7 @@ class LLMBenchmark:
                 first_token_latency_ms=first_token_latency,
                 throughput_tokens_per_sec=throughput,
                 total_inference_time_sec=throughput_time,
-                num_tokens_generated=num_tokens,
+                num_tokens_generated=generated_tokens,
                 success=True
             )
 
@@ -372,8 +374,14 @@ def main():
     # Quantisierungen zum Testen
     quantizations = [
         ("FP16", {"torch_dtype": torch.float16, "device_map": "auto"}),
-        ("8-bit", {"load_in_8bit": True, "device_map": "auto"}),
-        ("4-bit", {"load_in_4bit": True, "device_map": "auto"}),
+        ("8-bit", {
+            "quantization_config": BitsAndBytesConfig(load_in_8bit=True),
+            "device_map": "auto",
+        }),
+        ("4-bit", {
+            "quantization_config": BitsAndBytesConfig(load_in_4bit=True),
+            "device_map": "auto",
+        }),
     ]
 
     test_prompt = "The future of artificial intelligence is"

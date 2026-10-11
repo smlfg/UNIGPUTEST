@@ -13,9 +13,10 @@ Fokus auf 4-bit Quantisierung (beste Performance/Memory Balance)
 """
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import time
 import gc
+import sys
 from dataclasses import dataclass
 from typing import Optional
 
@@ -86,7 +87,7 @@ def test_model(
         }
 
         if use_4bit:
-            load_kwargs["load_in_4bit"] = True
+            load_kwargs["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True)
 
         model = AutoModelForCausalLM.from_pretrained(
             model_id,
@@ -132,6 +133,7 @@ def test_model(
             outputs = model.generate(
                 **inputs,
                 max_new_tokens=num_tokens,
+                min_new_tokens=num_tokens,
                 do_sample=True,
                 temperature=0.7,
                 top_p=0.9,
@@ -140,7 +142,8 @@ def test_model(
 
         torch.cuda.synchronize()
         throughput_time = time.time() - throughput_start
-        throughput = num_tokens / throughput_time
+        generated_tokens = outputs.shape[-1] - inputs["input_ids"].shape[-1]
+        throughput = generated_tokens / throughput_time
 
         # Generierter Text
         full_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
@@ -199,7 +202,7 @@ def main():
     # GPU Check
     if not torch.cuda.is_available():
         print("❌ CUDA not available!")
-        return
+        sys.exit(1)
 
     print(f"GPU: {torch.cuda.get_device_name(0)}")
     print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
@@ -214,8 +217,8 @@ def main():
         # Klein & effizient (gut zum Starten)
         ("microsoft/phi-2", "Phi-2 (2.7B)", 100),
 
-        # Google's kompaktes Modell
-        ("google/gemma-2b", "Gemma 2B", 100),
+        # Google's kompaktes Modell (gated, braucht HuggingFace Token)
+        # ("google/gemma-2b", "Gemma 2B", 100),
 
         # State-of-the-art (empfohlen!)
         ("mistralai/Mistral-7B-v0.1", "Mistral 7B", 150),
@@ -302,6 +305,9 @@ def main():
        - Test with your own prompts
        - Fine-tune with LoRA/QLoRA
     """)
+
+    if any(not r.success for r in results):
+        sys.exit(1)
 
 
 if __name__ == "__main__":

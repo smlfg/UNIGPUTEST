@@ -12,8 +12,9 @@ Verwendet fixed seed für Vergleichbarkeit!
 """
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, set_seed
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, set_seed
 import gc
+import sys
 from typing import List, Dict
 import json
 
@@ -78,7 +79,7 @@ class PromptTester:
 
         model = AutoModelForCausalLM.from_pretrained(
             model_id,
-            load_in_4bit=True,
+            quantization_config=BitsAndBytesConfig(load_in_4bit=True),
             device_map="auto",
             torch_dtype=torch.float16
         )
@@ -115,11 +116,9 @@ class PromptTester:
                 pad_token_id=tokenizer.eos_token_id
             )
 
-        # Decode
-        full_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
-        # Entferne Prompt aus Output
-        response = full_text[len(prompt):].strip()
+        # Decode nur die neu generierten Tokens (token-aligned)
+        input_len = inputs["input_ids"].shape[-1]
+        response = tokenizer.decode(outputs[0][input_len:], skip_special_tokens=True).strip()
 
         return response
 
@@ -244,7 +243,7 @@ def main():
     # GPU Check
     if not torch.cuda.is_available():
         print("❌ CUDA not available!")
-        return
+        sys.exit(1)
 
     print(f"GPU: {torch.cuda.get_device_name(0)}")
     print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
@@ -258,8 +257,8 @@ def main():
         # Klein & schnell
         ("microsoft/phi-2", "Phi-2"),
 
-        # Google
-        ("google/gemma-2b", "Gemma 2B"),
+        # Google (gated, braucht HuggingFace Token)
+        # ("google/gemma-2b", "Gemma 2B"),
 
         # State-of-the-art
         ("mistralai/Mistral-7B-v0.1", "Mistral 7B"),
@@ -309,6 +308,22 @@ def main():
        - Try different temperatures (creativity)
        - Fine-tune for specific domains
     """)
+
+    failed = False
+    for model_result in tester.results.values():
+        if isinstance(model_result, dict) and "error" in model_result:
+            failed = True
+            break
+        if isinstance(model_result, dict):
+            for items in model_result.values():
+                if isinstance(items, list) and any(not item.get("success") for item in items):
+                    failed = True
+                    break
+        if failed:
+            break
+
+    if failed:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

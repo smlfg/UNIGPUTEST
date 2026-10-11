@@ -60,6 +60,7 @@ def main():
             outputs = model.generate(
                 **inputs,
                 max_new_tokens=30,
+                min_new_tokens=30,
                 do_sample=True,
                 temperature=0.8,
                 top_p=0.9
@@ -67,7 +68,8 @@ def main():
         gen_time = time.time() - start
 
         text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        tokens_per_sec = 30 / gen_time
+        generated_tokens = outputs.shape[-1] - inputs["input_ids"].shape[-1]
+        tokens_per_sec = generated_tokens / gen_time
 
         print(f"Output: {text}")
         print(f"⚡ Speed: {tokens_per_sec:.1f} tokens/sec ({gen_time:.2f}s)")

@@ -10,7 +10,7 @@ echo "========================================"
 echo ""
 
 echo "Installing PyTorch with CUDA support..."
-pip install torch torchvision torchaudio
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
 echo ""
 echo "Installing GPU monitoring tools..."
